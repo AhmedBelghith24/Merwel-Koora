@@ -10,7 +10,7 @@ function AboutPage() {
       <p className="mt-6 text-lg tracking-wide leading-8 max-w-2xl mx-auto text-muted-foreground">
         Discover and trade authentic vintage soccer jerseys from clubs and
         national teams across the world — all from right here in Tunisia.
-        Whether you're a collector, a fan, or just love the game, our platform
+        Whether you&#39;re a collector, a fan, or just love the game, our platform
         connects you with the passion and history behind every jersey.
       </p>
     </section>

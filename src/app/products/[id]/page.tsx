@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import BreadCrumbs from '@/components/single-product/BreadCrumbs'
 import { fetchSingleProduct } from '@/utils/actions'
 import Image from 'next/image'
@@ -6,13 +7,20 @@ import FavoriteToggleButton from '@/components/products/FavoriteToggleButton'
 import AddToCart from '@/components/single-product/AddToCart'
 import ProductRating from '@/components/single-product/ProductRating'
 
-interface SingleProductPageProps {
+type Props = {
   params: {
     id: string
   }
 }
 
-async function SingleProductPage({ params }: SingleProductPageProps) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const product = await fetchSingleProduct(params.id)
+  return {
+    title: product.name,
+  }
+}
+
+export default async function SingleProductPage({ params }: Props) {
   const product = await fetchSingleProduct(params.id)
   const { name, image, company, description, price } = product
   const dollarsAmount = formatCurrency(price)
@@ -21,7 +29,6 @@ async function SingleProductPage({ params }: SingleProductPageProps) {
     <section>
       <BreadCrumbs name={product.name} />
       <div className="mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16">
-        {/* IMAGE FIRST COL */}
         <div className="relative h-full">
           <Image
             src={image}
@@ -32,7 +39,6 @@ async function SingleProductPage({ params }: SingleProductPageProps) {
             className="w-full rounded-md object-cover"
           />
         </div>
-        {/* PRODUCT INFO SECOND COL */}
         <div>
           <div className="flex gap-x-8 items-center">
             <h1 className="capitalize text-3xl font-bold">{name}</h1>
@@ -50,5 +56,3 @@ async function SingleProductPage({ params }: SingleProductPageProps) {
     </section>
   )
 }
-
-export default SingleProductPage

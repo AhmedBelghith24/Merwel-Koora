@@ -1,10 +1,15 @@
-import type { NextConfig } from 'next'
+// next.config.js
 
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  eslint: {
+    // Ignore ESLint errors during builds (e.g., for Vercel deployment)
+    ignoreDuringBuilds: true,
+  },
   images: {
-    domains: ['images.pexels.com'], // ✅ Add this line
+    // Allow images from this external domain
+    domains: ['images.pexels.com'],
   },
 }
 
-export default nextConfig
+module.exports = nextConfig

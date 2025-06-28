@@ -7,27 +7,21 @@ import FavoriteToggleButton from '@/components/products/FavoriteToggleButton'
 import AddToCart from '@/components/single-product/AddToCart'
 import ProductRating from '@/components/single-product/ProductRating'
 
-type Props = {
-  params: {
-    id: string
-  }
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const product = await fetchSingleProduct(params.id)
   return {
     title: product.name,
   }
 }
 
-export default async function SingleProductPage({ params }: Props) {
+export default async function SingleProductPage({ params }: { params: { id: string } }) {
   const product = await fetchSingleProduct(params.id)
   const { name, image, company, description, price } = product
   const dollarsAmount = formatCurrency(price)
 
   return (
     <section>
-      <BreadCrumbs name={product.name} />
+      <BreadCrumbs name={name} />
       <div className="mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16">
         <div className="relative h-full">
           <Image

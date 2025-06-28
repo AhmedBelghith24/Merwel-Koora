@@ -1,3 +1,4 @@
+// src/app/products/[id]/page.tsx
 import { Metadata } from 'next'
 import BreadCrumbs from '@/components/single-product/BreadCrumbs'
 import { fetchSingleProduct } from '@/utils/actions'
@@ -7,14 +8,20 @@ import FavoriteToggleButton from '@/components/products/FavoriteToggleButton'
 import AddToCart from '@/components/single-product/AddToCart'
 import ProductRating from '@/components/single-product/ProductRating'
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+type PageProps = {
+  params: {
+    id: string
+  }
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const product = await fetchSingleProduct(params.id)
   return {
     title: product.name,
   }
 }
 
-export default async function SingleProductPage({ params }: { params: { id: string } }) {
+export default async function SingleProductPage({ params }: PageProps) {
   const product = await fetchSingleProduct(params.id)
   const { name, image, company, description, price } = product
   const dollarsAmount = formatCurrency(price)

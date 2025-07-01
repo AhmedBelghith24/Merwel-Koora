@@ -9,19 +9,19 @@ import FavoriteToggleButton from '@/components/products/FavoriteToggleButton'
 import AddToCart from '@/components/single-product/AddToCart'
 import ProductRating from '@/components/single-product/ProductRating'
 
-// ✅ Local type definition
-type PageProps = {
+// ✅ Renamed to avoid conflict with internal Vercel/Next types
+type ProductPageProps = {
   params: {
     id: string
   }
 }
 
-// ✅ Optional: Mark the route as dynamic if you don’t use generateStaticParams
+// ✅ If you're not using generateStaticParams, make the route dynamic
 export const dynamic = 'force-dynamic'
 
-// ✅ Fixed function signature for metadata
+// ✅ Corrected metadata generation signature
 export async function generateMetadata(
-  { params }: PageProps,
+  { params }: ProductPageProps,
   _parent?: ResolvingMetadata
 ): Promise<Metadata> {
   const product = await fetchSingleProduct(params.id)
@@ -30,8 +30,8 @@ export async function generateMetadata(
   }
 }
 
-// ✅ Server component page
-export default async function SingleProductPage({ params }: PageProps) {
+// ✅ Main page component
+export default async function SingleProductPage({ params }: ProductPageProps) {
   const product = await fetchSingleProduct(params.id)
   const { name, image, company, description, price } = product
   const dollarsAmount = formatCurrency(price)
@@ -40,13 +40,13 @@ export default async function SingleProductPage({ params }: PageProps) {
     <section>
       <BreadCrumbs name={name} />
       <div className="mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16">
-        {/* ✅ Ensure fixed height on image container to avoid runtime layout errors */}
+        {/* ✅ Fixed height to avoid Image layout issues */}
         <div className="relative h-[400px]">
           <Image
             src={image}
             alt={name}
             fill
-            sizes="(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw"
+            sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw"
             priority
             className="w-full rounded-md object-cover"
           />

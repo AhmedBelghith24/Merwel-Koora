@@ -1,5 +1,6 @@
 // src/app/products/[id]/page.tsx
-import { Metadata } from 'next'
+
+import type { Metadata, ResolvingMetadata } from 'next'
 import BreadCrumbs from '@/components/single-product/BreadCrumbs'
 import { fetchSingleProduct } from '@/utils/actions'
 import Image from 'next/image'
@@ -8,19 +9,28 @@ import FavoriteToggleButton from '@/components/products/FavoriteToggleButton'
 import AddToCart from '@/components/single-product/AddToCart'
 import ProductRating from '@/components/single-product/ProductRating'
 
+// ✅ Local type definition
 type PageProps = {
   params: {
     id: string
   }
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+// ✅ Optional: Mark the route as dynamic if you don’t use generateStaticParams
+export const dynamic = 'force-dynamic'
+
+// ✅ Fixed function signature for metadata
+export async function generateMetadata(
+  { params }: PageProps,
+  _parent?: ResolvingMetadata
+): Promise<Metadata> {
   const product = await fetchSingleProduct(params.id)
   return {
     title: product.name,
   }
 }
 
+// ✅ Server component page
 export default async function SingleProductPage({ params }: PageProps) {
   const product = await fetchSingleProduct(params.id)
   const { name, image, company, description, price } = product
@@ -30,7 +40,8 @@ export default async function SingleProductPage({ params }: PageProps) {
     <section>
       <BreadCrumbs name={name} />
       <div className="mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16">
-        <div className="relative h-full">
+        {/* ✅ Ensure fixed height on image container to avoid runtime layout errors */}
+        <div className="relative h-[400px]">
           <Image
             src={image}
             alt={name}

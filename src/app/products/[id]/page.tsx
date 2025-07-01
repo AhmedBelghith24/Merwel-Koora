@@ -12,21 +12,19 @@ import ProductRating from '@/components/single-product/ProductRating'
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(
-  { params }: { params: { id: string } },
+  context: { params: { id: string } },
   _parent?: ResolvingMetadata
 ): Promise<Metadata> {
-  const product = await fetchSingleProduct(params.id)
+  const product = await fetchSingleProduct(context.params.id)
   return {
     title: product.name,
   }
 }
 
-export default async function SingleProductPage({
-  params,
-}: {
-  params: { id: string }
-}) {
-  const product = await fetchSingleProduct(params.id)
+export default async function SingleProductPage(
+  context: { params: { id: string } }
+) {
+  const product = await fetchSingleProduct(context.params.id)
   const { name, image, company, description, price } = product
   const dollarsAmount = formatCurrency(price)
 
@@ -47,15 +45,15 @@ export default async function SingleProductPage({
         <div>
           <div className="flex gap-x-8 items-center">
             <h1 className="capitalize text-3xl font-bold">{name}</h1>
-            <FavoriteToggleButton productId={params.id} />
+            <FavoriteToggleButton productId={context.params.id} />
           </div>
-          <ProductRating productId={params.id} />
+          <ProductRating productId={context.params.id} />
           <h4 className="text-xl mt-2">{company}</h4>
           <p className="mt-3 text-md bg-muted inline-block p-2 rounded-md">
             {dollarsAmount}
           </p>
           <p className="mt-6 leading-8 text-muted-foreground">{description}</p>
-          <AddToCart productId={params.id} />
+          <AddToCart productId={context.params.id} />
         </div>
       </div>
     </section>

@@ -1,55 +1,32 @@
-// src/app/products/[id]/page.tsx
+// src/app/products/page.tsx
 import React from 'react'
-import BreadCrumbs from '@/components/single-product/BreadCrumbs'
-import { fetchSingleProduct } from '@/utils/actions'
-import Image from 'next/image'
-import { formatCurrency } from '@/utils/format'
-import FavoriteToggleButton from '@/components/products/FavoriteToggleButton'
-import AddToCart from '@/components/single-product/AddToCart'
-import ProductRating from '@/components/single-product/ProductRating'
+import BreadCrumbs from '@/components/products/BreadCrumbs'
+import ProductCard from '@/components/products/ProductCard'
+import { fetchAllProducts } from '@/utils/actions'
 
-interface SingleProductPageProps {
-  // Next.js 15 now passes params as a Promise
-  params: Promise<{ id: string }>
+interface ProductsPageProps {
+  // Next.js 15 now passes searchParams as a Promise
+  searchParams: Promise<{
+    layout?: 'grid' | 'list'
+    search?: string
+  }>
 }
 
-export default async function SingleProductPage({ params }: SingleProductPageProps) {
-  // await the params to get the actual id
-  const { id } = await params
-  const product = await fetchSingleProduct(id)
-  const { name, image, company, description, price } = product
-  const dollarsAmount = formatCurrency(price)
+export default async function ProductsPage({ searchParams }: ProductsPageProps) {
+  // await the params to get the actual values
+  const { layout = 'grid', search = '' } = await searchParams
+
+  // fetch your product list however you like
+  const products = await fetchAllProducts(search)
 
   return (
-    <section>
-      <BreadCrumbs name={name} />
-      <div className="mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16">
-        {/* IMAGE FIRST COL */}
-        <div className="relative h-full">
-          <Image
-            src={image}
-            alt={name}
-            fill
-            sizes="(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw"
-            priority
-            className="w-full rounded-md object-cover"
-          />
-        </div>
+    <section className="px-4 py-8">
+      <BreadCrumbs />
 
-        {/* PRODUCT INFO SECOND COL */}
-        <div>
-          <div className="flex gap-x-8 items-center">
-            <h1 className="capitalize text-3xl font-bold">{name}</h1>
-            <FavoriteToggleButton productId={id} />
-          </div>
-          <ProductRating productId={id} />
-          <h4 className="text-xl mt-2">{company}</h4>
-          <p className="mt-3 text-md bg-muted inline-block p-2 rounded-md">
-            {dollarsAmount}
-          </p>
-          <p className="mt-6 leading-8 text-muted-foreground">{description}</p>
-          <AddToCart productId={id} />
-        </div>
+      <div className={layout === 'list' ? 'space-y-6' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'}>
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} layout={layout} />
+        ))}
       </div>
     </section>
   )

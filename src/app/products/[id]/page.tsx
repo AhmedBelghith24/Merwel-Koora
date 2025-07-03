@@ -1,3 +1,5 @@
+// src/app/products/[id]/page.tsx
+
 import BreadCrumbs from '@/components/single-product/BreadCrumbs'
 import { fetchSingleProduct } from '@/utils/actions'
 import Image from 'next/image'
@@ -6,20 +8,15 @@ import FavoriteToggleButton from '@/components/products/FavoriteToggleButton'
 import AddToCart from '@/components/single-product/AddToCart'
 import ProductRating from '@/components/single-product/ProductRating'
 
-// Define the correct and complete type for page props
-type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
-
-// Apply the type to the component props
-async function SingleProductPage({ params }: Props) {
+// Use a direct inline type for the props
+async function SingleProductPage({
+  params,
+}: {
+  params: { id: string }
+}) {
   const product = await fetchSingleProduct(params.id)
-  // When product is null or undefined, you should handle it.
-  // For now, let's assume fetchSingleProduct always returns a valid product.
   const { name, image, company, description, price } = product
   const dollarsAmount = formatCurrency(price)
-
   return (
     <section>
       <BreadCrumbs name={product.name} />
@@ -53,5 +50,4 @@ async function SingleProductPage({ params }: Props) {
     </section>
   )
 }
-
 export default SingleProductPage

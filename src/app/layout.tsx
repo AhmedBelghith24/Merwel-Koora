@@ -20,11 +20,14 @@ export const metadata: Metadata = {
   description: 'A nifty Store for Football Fans built with Next.js',
 }
 
-export default function RootLayout({
+// FIX: Renamed the function and added 'params' to the type definition.
+export default function ProductsLayout({
   children,
-}: Readonly<{
+  params, // Even if unused, it must be here to match the props passed by Next.js
+}: {
   children: React.ReactNode
-}>) {
+  params: { id: string }
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body

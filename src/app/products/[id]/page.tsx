@@ -47,7 +47,7 @@ async function SingleProductPage({
             {dollarsAmount}
           </p>
           <p className="mt-6 leading-8 text-muted-foreground">{description}</p>
-          <AddToCart productId={id} />
+          <AddToCart />
         </div>
       </div>
     </section>

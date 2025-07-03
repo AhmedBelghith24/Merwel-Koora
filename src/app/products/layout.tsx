@@ -1,13 +1,13 @@
 import React from 'react';
 
 // This layout is much simpler. It just passes children through.
-// It correctly accepts 'params' which fixes the build error.
+// Updated to handle Promise-based params in Next.js 15
 export default function ProductsLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   return <>{children}</>;
 }

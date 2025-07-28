@@ -7,33 +7,34 @@ import {
 } from '@/components/ui/carousel'
 import { Card, CardContent } from '@/components/ui/card'
 import Image from 'next/image'
-import hero1 from '@/assets/images/hero1.jpg'
-import hero2 from '@/assets/images/hero2.jpeg'
-import hero3 from '@/assets/images/hero3.jpeg'
-import hero4 from '@/assets/images/hero4.jpg'
 
-const carouselImages = [hero1, hero2, hero3, hero4]
+const carouselImages = [
+  'https://images.pexels.com/photos/47730/the-ball-stadion-football-the-pitch-47730.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  'https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  'https://images.pexels.com/photos/1034584/pexels-photo-1034584.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  'https://images.pexels.com/photos/943150/pexels-photo-943150.jpeg?auto=compress&cs=tinysrgb&w=1600',
+]
 
 function HeroCarousel() {
   return (
     <div className="hidden lg:block">
       <Carousel>
         <CarouselContent>
-          {carouselImages.map((image, index) => {
-            return (
-              <CarouselItem key={index}>
-                <Card>
-                  <CardContent className="p-2">
-                    <Image
-                      src={image}
-                      alt="hero"
-                      className="w-full h-[24rem] rounded-md object-cover"
-                    />
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            )
-          })}
+          {carouselImages.map((image, index) => (
+            <CarouselItem key={index}>
+              <Card>
+                <CardContent className="p-2 relative w-full h-[24rem]">
+                  <Image
+                    src={image}
+                    alt={`Hero image ${index + 1}`}
+                    fill
+                    className="rounded-md object-cover"
+                    priority={index === 0}
+                  />
+                </CardContent>
+              </Card>
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
@@ -41,4 +42,5 @@ function HeroCarousel() {
     </div>
   )
 }
+
 export default HeroCarousel

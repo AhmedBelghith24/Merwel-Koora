@@ -1,39 +1,3 @@
-// import {
-//   DropdownMenu,
-//   DropdownMenuContent,
-//   DropdownMenuItem,
-//   DropdownMenuTrigger,
-// } from '@/components/ui/dropdown-menu'
-// import { LuAlignLeft } from 'react-icons/lu'
-// import Link from 'next/link'
-// import { Button } from '../ui/button'
-// import { links } from '@/utils/links'
-// import React from 'react'
-
-// function LinksDropdown() {
-//   return (
-//     <DropdownMenu>
-//       <DropdownMenuTrigger asChild>
-//         <Button variant="outline" className="flex gap-4 max-w-[100px]">
-//           <LuAlignLeft className="w-6 h-6" />
-//         </Button>
-//       </DropdownMenuTrigger>
-//       <DropdownMenuContent className="w-40" align="start" sideOffset={10}>
-//         {links.map((link) => {
-//           return (
-//             <DropdownMenuItem key={link.href}>
-//               <Link href={link.href} className="capitalize w-full">
-//                 {link.label}
-//               </Link>
-//             </DropdownMenuItem>
-//           )
-//         })}
-//       </DropdownMenuContent>
-//     </DropdownMenu>
-//   )
-// }
-// export default LinksDropdown
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,8 +12,10 @@ import { links } from '@/utils/links'
 import UserIcon from './UserIcon'
 import SignOutLink from './SignOutLink'
 import { SignInButton, SignUpButton, SignedIn, SignedOut } from '@clerk/nextjs'
-
-function LinksDropdown() {
+import { auth } from '@clerk/nextjs/server'
+async function LinksDropdown() {
+  const { userId } = await auth()
+  const isAdmin = userId === process.env.ADMIN_USER_ID
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -74,6 +40,7 @@ function LinksDropdown() {
         </SignedOut>
         <SignedIn>
           {links.map((link) => {
+            if (link.label === 'dashboard' && !isAdmin) return null
             return (
               <DropdownMenuItem key={link.href}>
                 <Link href={link.href} className="capitalize w-full">

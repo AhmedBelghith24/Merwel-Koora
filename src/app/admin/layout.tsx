@@ -1,5 +1,6 @@
 import { Separator } from '@/components/ui/separator'
-import Sidebar from './Sidebar'
+import Sidebar from './Sidebar' // ✅ Correct
+
 
 function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (

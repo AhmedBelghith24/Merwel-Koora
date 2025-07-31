@@ -1,31 +1,16 @@
-import {
-  fetchAdminProductDetails,
-  updateProductAction,
-  updateProductImageAction,
-} from '@/utils/actions'
-import FormContainer from '@/components/form/FormContainer'
-import FormInput from '@/components/form/FormInput'
-import PriceInput from '@/components/form/PriceInput'
-import TextAreaInput from '@/components/form/TextAreaInput'
-import { SubmitButton } from '@/components/form/Buttons'
-import CheckboxInput from '@/components/form/CheckboxInput'
-import ImageInputContainer from '@/components/form/ImageInputContainer'
-
 type EditProductPageProps = {
   params: { id: string }
 }
- 
-function EditProductPage({ params }: EditProductPageProps) {
+
+export default async function EditProductPage({ params }: EditProductPageProps) {
   const { id } = params
   const product = await fetchAdminProductDetails(id)
   const { name, company, description, featured, price } = product
-
 
   return (
     <section>
       <h1 className="text-2xl font-semibold mb-8 capitalize">update product</h1>
 
-      {/* 🖼️ Separate form for updating image */}
       <div className="border p-8 rounded-md mb-8">
         <ImageInputContainer
           action={updateProductImageAction}
@@ -38,7 +23,6 @@ function EditProductPage({ params }: EditProductPageProps) {
         </ImageInputContainer>
       </div>
 
-      {/* 📝 Form for updating product details */}
       <div className="border p-8 rounded-md">
         <FormContainer action={updateProductAction}>
           <div className="grid gap-4 md:grid-cols-2 my-4">
@@ -78,5 +62,6 @@ function EditProductPage({ params }: EditProductPageProps) {
     </section>
   )
 }
+
 
 export default EditProductPage

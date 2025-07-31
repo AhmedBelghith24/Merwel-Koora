@@ -23,7 +23,6 @@ export default async function EditProductPage({
     <section>
       <h1 className="text-2xl font-semibold mb-8 capitalize">update product</h1>
 
-      {/* 🖼️ Separate form for updating image */}
       <div className="border p-8 rounded-md mb-8">
         <ImageInputContainer
           action={updateProductImageAction}
@@ -36,7 +35,6 @@ export default async function EditProductPage({
         </ImageInputContainer>
       </div>
 
-      {/* 📝 Form for updating product details */}
       <div className="border p-8 rounded-md">
         <FormContainer action={updateProductAction}>
           <div className="grid gap-4 md:grid-cols-2 my-4">

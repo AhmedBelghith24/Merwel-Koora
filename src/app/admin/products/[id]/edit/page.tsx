@@ -11,34 +11,49 @@ import { SubmitButton } from '@/components/form/Buttons'
 import CheckboxInput from '@/components/form/CheckboxInput'
 import ImageInputContainer from '@/components/form/ImageInputContainer'
 
-export default async function EditProductPage({
-  params,
-}: {
-  params: { id: string }
-}) {
-  const product = await fetchAdminProductDetails(params.id)
-  const { name, company, description, featured, price } = product
+type EditProductPageProps = {
+  params: {
+    id: string
+  }
+}
+
+export default async function EditProductPage({ params }: EditProductPageProps) {
+  const { id } = params
+
+  const product = await fetchAdminProductDetails(id)
+
+  if (!product) {
+    return (
+      <section className="p-4">
+        <h1 className="text-xl text-red-500">Product not found</h1>
+      </section>
+    )
+  }
+
+  const { name, company, description, featured, price, image } = product
 
   return (
     <section>
       <h1 className="text-2xl font-semibold mb-8 capitalize">update product</h1>
 
+      {/* 🖼️ Separate form for updating image */}
       <div className="border p-8 rounded-md mb-8">
         <ImageInputContainer
           action={updateProductImageAction}
           name={name}
-          image={product.image}
+          image={image}
           text="update image"
         >
-          <input type="hidden" name="id" value={params.id} />
-          <input type="hidden" name="url" value={product.image} />
+          <input type="hidden" name="id" value={id} />
+          <input type="hidden" name="url" value={image} />
         </ImageInputContainer>
       </div>
 
+      {/* 📝 Form for updating product details */}
       <div className="border p-8 rounded-md">
         <FormContainer action={updateProductAction}>
           <div className="grid gap-4 md:grid-cols-2 my-4">
-            <input type="hidden" name="id" value={params.id} />
+            <input type="hidden" name="id" value={id} />
             <FormInput
               type="text"
               name="name"
@@ -74,6 +89,7 @@ export default async function EditProductPage({
     </section>
   )
 }
+
 
 
 

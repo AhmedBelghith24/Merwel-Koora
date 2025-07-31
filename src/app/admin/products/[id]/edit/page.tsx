@@ -3,6 +3,7 @@ import {
   updateProductAction,
   updateProductImageAction,
 } from '@/utils/actions'
+
 import FormContainer from '@/components/form/FormContainer'
 import FormInput from '@/components/form/FormInput'
 import PriceInput from '@/components/form/PriceInput'
@@ -10,29 +11,18 @@ import TextAreaInput from '@/components/form/TextAreaInput'
 import { SubmitButton } from '@/components/form/Buttons'
 import CheckboxInput from '@/components/form/CheckboxInput'
 import ImageInputContainer from '@/components/form/ImageInputContainer'
-import { Metadata } from 'next'
 
-// Optional SEO metadata
-export const metadata: Metadata = {
-  title: 'Edit Product',
-}
-
-type Props = {
+type EditProductPageProps = {
   params: {
     id: string
   }
 }
 
-export default async function Page({ params }: Props) {
-  const { id } = params
-  const product = await fetchAdminProductDetails(id)
+export default async function EditProductPage({ params }: EditProductPageProps) {
+  const product = await fetchAdminProductDetails(params.id)
 
   if (!product) {
-    return (
-      <section className="p-4">
-        <h1 className="text-xl text-red-500">Product not found</h1>
-      </section>
-    )
+    return <div className="text-red-600">Product not found.</div>
   }
 
   const { name, company, description, featured, price, image } = product
@@ -49,7 +39,7 @@ export default async function Page({ params }: Props) {
           image={image}
           text="update image"
         >
-          <input type="hidden" name="id" value={id} />
+          <input type="hidden" name="id" value={params.id} />
           <input type="hidden" name="url" value={image} />
         </ImageInputContainer>
       </div>
@@ -58,7 +48,7 @@ export default async function Page({ params }: Props) {
       <div className="border p-8 rounded-md">
         <FormContainer action={updateProductAction}>
           <div className="grid gap-4 md:grid-cols-2 my-4">
-            <input type="hidden" name="id" value={id} />
+            <input type="hidden" name="id" value={params.id} />
             <FormInput
               type="text"
               name="name"
@@ -94,3 +84,4 @@ export default async function Page({ params }: Props) {
     </section>
   )
 }
+

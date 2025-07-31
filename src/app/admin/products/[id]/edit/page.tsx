@@ -10,16 +10,21 @@ import TextAreaInput from '@/components/form/TextAreaInput'
 import { SubmitButton } from '@/components/form/Buttons'
 import CheckboxInput from '@/components/form/CheckboxInput'
 import ImageInputContainer from '@/components/form/ImageInputContainer'
+import { Metadata } from 'next'
 
-type EditProductPageProps = {
+// Optional SEO metadata
+export const metadata: Metadata = {
+  title: 'Edit Product',
+}
+
+type Props = {
   params: {
     id: string
   }
 }
 
-export default async function EditProductPage({ params }: EditProductPageProps) {
+export default async function Page({ params }: Props) {
   const { id } = params
-
   const product = await fetchAdminProductDetails(id)
 
   if (!product) {
@@ -89,7 +94,3 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
     </section>
   )
 }
-
-
-
-

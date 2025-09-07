@@ -3,6 +3,19 @@ export type actionFunction = (
   formData: FormData
 ) => Promise<{ message: string }>
 
+export type Product = {
+  id: string
+  name: string
+  company: string
+  description: string
+  featured: boolean
+  image: string
+  price: number
+  createdAt: Date
+  updatedAt: Date
+  clerkId: string
+}
+
 export type CartItem = {
   productId: string
   image: string

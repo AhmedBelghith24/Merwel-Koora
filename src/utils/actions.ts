@@ -40,12 +40,14 @@ export const fetchFeaturedProducts = async () => {
 
 export const fetchAllProducts = async ({ search = '' }: { search: string }) => {
   return db.product.findMany({
-    where: {
-      OR: [
-        { name: { contains: search, mode: 'insensitive' } },
-        { company: { contains: search, mode: 'insensitive' } },
-      ],
-    },
+    where: search
+      ? {
+          OR: [
+            { name: { contains: search } },
+            { company: { contains: search } },
+          ],
+        }
+      : {},
     orderBy: { createdAt: 'desc' },
   })
 }

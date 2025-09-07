@@ -1,38 +1,38 @@
 [
   {
-    "name": "avant-garde lamp",
-    "company": "Modenza",
-    "description": "Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge",
+    "name": "Manchester United Home Jersey",
+    "company": "Adidas",
+    "description": "Official Manchester United home jersey featuring the iconic red color with black accents. Made with moisture-wicking fabric for optimal performance. Includes the club crest and sponsor logos. Perfect for match days or casual wear to show your support for the Red Devils.",
     "featured": true,
-    "image": "https://images.pexels.com/photos/5705090/pexels-photo-5705090.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    "price": 100,
+    "image": "https://images.pexels.com/photos/3651597/pexels-photo-3651597.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "price": 90,
     "clerkId": "clerkId"
   },
   {
-    "name": "chic chair",
-    "company": "Luxora",
-    "description": "Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge",
+    "name": "Barcelona Away Jersey",
+    "company": "Nike",
+    "description": "Barcelona's stunning away jersey in classic blue and burgundy stripes. Crafted with Dri-FIT technology for superior comfort and breathability. Features the FC Barcelona badge and Nike swoosh. A must-have for any Barça fan.",
     "featured": true,
-    "image": "https://images.pexels.com/photos/5705090/pexels-photo-5705090.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    "price": 200,
+    "image": "https://images.pexels.com/photos/3651597/pexels-photo-3651597.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "price": 95,
     "clerkId": "clerkId"
   },
   {
-    "name": "comfy bed",
-    "company": "Homestead",
-    "description": "Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge",
+    "name": "Real Madrid Third Jersey",
+    "company": "Adidas",
+    "description": "Real Madrid's sleek third jersey in elegant black with gold details. Premium quality construction with AEROREADY technology. Features the iconic Real Madrid crest and Adidas three stripes. Perfect for Los Blancos supporters worldwide.",
     "featured": true,
-    "image": "https://images.pexels.com/photos/1034584/pexels-photo-1034584.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    "price": 300,
+    "image": "https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "price": 85,
     "clerkId": "clerkId"
   },
   {
-    "name": "contemporary sofa",
-    "company": "Comfora",
-    "description": "Cloud bread VHS hell of banjo bicycle rights jianbing umami mumblecore etsy 8-bit pok pok +1 wolf. Vexillologist yr dreamcatcher waistcoat, authentic chillwave trust fund. Viral typewriter fingerstache pinterest pork belly narwhal. Schlitz venmo everyday carry kitsch pitchfork chillwave iPhone taiyaki trust fund hashtag kinfolk microdosing gochujang live-edge",
+    "name": "Liverpool Retro Jersey",
+    "company": "New Balance",
+    "description": "Classic Liverpool retro jersey celebrating the club's golden era. Features the traditional all-red design with vintage styling. Made from comfortable cotton blend fabric. A nostalgic piece for any Liverpool FC fan who appreciates the club's rich history.",
     "featured": false,
-    "image": "https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    "price": 400,
+    "image": "https://images.pexels.com/photos/3651597/pexels-photo-3651597.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "price": 75,
     "clerkId": "clerkId"
   }
 ]

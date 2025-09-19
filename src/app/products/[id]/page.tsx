@@ -7,15 +7,14 @@ import FavoriteToggleButton from '@/components/products/FavoriteToggleButton'
 import AddToCart from '@/components/single-product/AddToCart'
 import ProductRating from '@/components/single-product/ProductRating'
 
-// Use a direct inline type for the props with Promise
+// Directly use the params in the function signature (no Promise wrapping)
 async function SingleProductPage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: { id: string } // No Promise, just the object
 }) {
-  // Await the params Promise to get the actual values
-  const { id } = await params;
-  
+  const { id } = params  // Use the id directly from params
+
   const product = await fetchSingleProduct(id)
   const { name, image, company, description, price } = product
   const dollarsAmount = formatCurrency(price)

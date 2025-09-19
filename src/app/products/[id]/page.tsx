@@ -7,18 +7,18 @@ import FavoriteToggleButton from '@/components/products/FavoriteToggleButton'
 import AddToCart from '@/components/single-product/AddToCart'
 import ProductRating from '@/components/single-product/ProductRating'
 
-// Directly use the params in the function signature (no Promise wrapping)
+// Directly use params in the function signature (no wrapping in a Promise)
 async function SingleProductPage({
   params,
 }: {
-  params: { id: string } // No Promise, just the object
+  params: { id: string } // This is the expected structure for the dynamic route
 }) {
-  const { id } = params  // Use the id directly from params
+  const { id } = params  // Extract id directly from params
 
-  const product = await fetchSingleProduct(id)
+  const product = await fetchSingleProduct(id)  // Use the id to fetch product data
   const { name, image, company, description, price } = product
   const dollarsAmount = formatCurrency(price)
-  
+
   return (
     <section>
       <BreadCrumbs name={product.name} />

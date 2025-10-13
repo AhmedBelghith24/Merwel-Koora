@@ -1,96 +1,50 @@
-import {
-  fetchAdminProductDetails,
-  updateProductAction,
-  updateProductImageAction,
-} from '@/utils/actions'
+import { fetchProductDetails } from '@/utils/actions'
+import { formatCurrency } from '@/utils/format'
+import { redirect } from 'next/navigation'
 
-import FormContainer from '@/components/form/FormContainer'
-import FormInput from '@/components/form/FormInput'
-import PriceInput from '@/components/form/PriceInput'
-import TextAreaInput from '@/components/form/TextAreaInput'
-import { SubmitButton } from '@/components/form/Buttons'
-import CheckboxInput from '@/components/form/CheckboxInput'
-import ImageInputContainer from '@/components/form/ImageInputContainer'
-
-// Async type definition for params (Promise-based)
-type EditProductPageProps = {
+type ProductPageProps = {
   params: Promise<{
     id: string;
   }>;
 };
 
-export default async function EditProductPage({ params }: EditProductPageProps) {
+export default async function ProductPage({ params }: ProductPageProps) {
   // Await the params Promise
   const { id } = await params;
-  
+
   let product;
 
   try {
-    product = await fetchAdminProductDetails(id);
+    product = await fetchProductDetails(id);
   } catch (error) {
     console.error("Failed to fetch product:", error);
-    return <div className="text-red-600">An error occurred while fetching product details.</div>;
+    redirect('/');
   }
 
   if (!product) {
-    return <div className="text-red-600">Product not found.</div>;
+    redirect('/');
   }
 
-  const { name, company, description, featured, price, image } = product;
+  const { image, title, price, description } = product;
 
   return (
-    <section>
-      <h1 className="text-2xl font-semibold mb-8 capitalize">update product</h1>
+    <section className="mt-6">
+      <div className="grid gap-y-8 lg:grid-cols-2 lg:gap-x-16 lg:items-center">
+        {/* Image */}
+        <img
+          src={image}
+          alt={title}
+          className="w-96 h-96 object-cover rounded-lg lg:w-full"
+        />
 
-      {/* 🖼️ Separate form for updating image */}
-      <div className="border p-8 rounded-md mb-8">
-        <ImageInputContainer
-          action={updateProductImageAction}
-          name={name}
-          image={image}
-          text="update image"
-        >
-          <input type="hidden" name="id" value={id} />
-          <input type="hidden" name="url" value={image} />
-        </ImageInputContainer>
-      </div>
-
-      {/* 📝 Form for updating product details */}
-      <div className="border p-8 rounded-md">
-        <FormContainer action={updateProductAction}>
-          <div className="grid gap-4 md:grid-cols-2 my-4">
-            <input type="hidden" name="id" value={id} />
-            <FormInput
-              type="text"
-              name="name"
-              label="product name"
-              defaultValue={name}
-            />
-            <FormInput
-              type="text"
-              name="company"
-              label="company"
-              defaultValue={company}
-            />
-            <PriceInput defaultValue={price} />
-          </div>
-
-          <TextAreaInput
-            name="description"
-            labelText="product description"
-            defaultValue={description}
-          />
-
-          <div className="mt-6">
-            <CheckboxInput
-              name="featured"
-              label="featured"
-              defaultChecked={featured}
-            />
-          </div>
-
-          <SubmitButton text="update product" className="mt-8" />
-        </FormContainer>
+        {/* Product Info */}
+        <div>
+          <h1 className="text-3xl font-semibold capitalize">{title}</h1>
+          <p className="mt-3 text-xl text-muted-foreground">
+            {formatCurrency(price)}
+          </p>
+          <p className="mt-6 leading-8 text-muted-foreground">{description}</p>
+        </div>
       </div>
     </section>
   );

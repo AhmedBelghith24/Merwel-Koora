@@ -12,20 +12,31 @@ import { SubmitButton } from '@/components/form/Buttons'
 import CheckboxInput from '@/components/form/CheckboxInput'
 import ImageInputContainer from '@/components/form/ImageInputContainer'
 
+// Async type definition for params (Promise-based)
 type EditProductPageProps = {
-  params: {
-    id: string
-  }
-}
+  params: Promise<{
+    id: string;
+  }>;
+};
 
 export default async function EditProductPage({ params }: EditProductPageProps) {
-  const product = await fetchAdminProductDetails(params.id)
+  // Await the params Promise
+  const { id } = await params;
+  
+  let product;
 
-  if (!product) {
-    return <div className="text-red-600">Product not found.</div>
+  try {
+    product = await fetchAdminProductDetails(id);
+  } catch (error) {
+    console.error("Failed to fetch product:", error);
+    return <div className="text-red-600">An error occurred while fetching product details.</div>;
   }
 
-  const { name, company, description, featured, price, image } = product
+  if (!product) {
+    return <div className="text-red-600">Product not found.</div>;
+  }
+
+  const { name, company, description, featured, price, image } = product;
 
   return (
     <section>
@@ -39,7 +50,7 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
           image={image}
           text="update image"
         >
-          <input type="hidden" name="id" value={params.id} />
+          <input type="hidden" name="id" value={id} />
           <input type="hidden" name="url" value={image} />
         </ImageInputContainer>
       </div>
@@ -48,7 +59,7 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
       <div className="border p-8 rounded-md">
         <FormContainer action={updateProductAction}>
           <div className="grid gap-4 md:grid-cols-2 my-4">
-            <input type="hidden" name="id" value={params.id} />
+            <input type="hidden" name="id" value={id} />
             <FormInput
               type="text"
               name="name"
@@ -82,5 +93,5 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
         </FormContainer>
       </div>
     </section>
-  )
+  );
 }

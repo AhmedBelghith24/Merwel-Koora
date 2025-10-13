@@ -1,3 +1,5 @@
+// src/app/admin/products/[id]/edit/page.tsx
+
 import {
   fetchAdminProductDetails,
   updateProductAction,
@@ -12,11 +14,12 @@ import { SubmitButton } from '@/components/form/Buttons'
 import CheckboxInput from '@/components/form/CheckboxInput'
 import ImageInputContainer from '@/components/form/ImageInputContainer'
 
+// Synchronous type definition for params
 type EditProductPageProps = {
   params: {
-    id: string
-  }
-}
+    id: string;
+  };
+};
 
 export default async function EditProductPage({ params }: EditProductPageProps) {
   let product;

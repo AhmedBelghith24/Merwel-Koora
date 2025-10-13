@@ -1,5 +1,3 @@
-// src/app/admin/products/[id]/edit/page.tsx
-
 import {
   fetchAdminProductDetails,
   updateProductAction,
@@ -14,28 +12,20 @@ import { SubmitButton } from '@/components/form/Buttons'
 import CheckboxInput from '@/components/form/CheckboxInput'
 import ImageInputContainer from '@/components/form/ImageInputContainer'
 
-// Synchronous type definition for params
 type EditProductPageProps = {
   params: {
-    id: string;
-  };
-};
+    id: string
+  }
+}
 
 export default async function EditProductPage({ params }: EditProductPageProps) {
-  let product;
-
-  try {
-    product = await fetchAdminProductDetails(params.id);
-  } catch (error) {
-    console.error("Failed to fetch product:", error);
-    return <div className="text-red-600">An error occurred while fetching product details.</div>;
-  }
+  const product = await fetchAdminProductDetails(params.id)
 
   if (!product) {
-    return <div className="text-red-600">Product not found.</div>;
+    return <div className="text-red-600">Product not found.</div>
   }
 
-  const { name, company, description, featured, price, image } = product;
+  const { name, company, description, featured, price, image } = product
 
   return (
     <section>
@@ -92,5 +82,5 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
         </FormContainer>
       </div>
     </section>
-  );
+  )
 }

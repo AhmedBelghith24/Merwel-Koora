@@ -19,13 +19,20 @@ type EditProductPageProps = {
 }
 
 export default async function EditProductPage({ params }: EditProductPageProps) {
-  const product = await fetchAdminProductDetails(params.id)
+  let product;
 
-  if (!product) {
-    return <div className="text-red-600">Product not found.</div>
+  try {
+    product = await fetchAdminProductDetails(params.id);
+  } catch (error) {
+    console.error("Failed to fetch product:", error);
+    return <div className="text-red-600">An error occurred while fetching product details.</div>;
   }
 
-  const { name, company, description, featured, price, image } = product
+  if (!product) {
+    return <div className="text-red-600">Product not found.</div>;
+  }
+
+  const { name, company, description, featured, price, image } = product;
 
   return (
     <section>
@@ -82,6 +89,5 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
         </FormContainer>
       </div>
     </section>
-  )
+  );
 }
-

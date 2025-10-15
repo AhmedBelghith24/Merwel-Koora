@@ -1,55 +1,87 @@
-// src/app/products/[id]/page.tsx
-import BreadCrumbs from '@/components/single-product/BreadCrumbs'
-import { fetchSingleProduct } from '@/utils/actions'
-import Image from 'next/image'
-import { formatCurrency } from '@/utils/format'
-import FavoriteToggleButton from '@/components/products/FavoriteToggleButton'
-import AddToCart from '@/components/single-product/AddToCart'
-import ProductRating from '@/components/single-product/ProductRating'
+import {
+  fetchAdminProductDetails,
+  updateProductAction,
+  updateProductImageAction,
+} from '@/utils/actions'
 
-async function SingleProductPage({
-  params,
-}: {
-  params: { id: string } // ✅ Plain object, not a Promise
-}) {
-  const { id } = params; // ✅ No await needed
+import FormContainer from '@/components/form/FormContainer'
+import FormInput from '@/components/form/FormInput'
+import PriceInput from '@/components/form/PriceInput'
+import TextAreaInput from '@/components/form/TextAreaInput'
+import { SubmitButton } from '@/components/form/Buttons'
+import CheckboxInput from '@/components/form/CheckboxInput'
+import ImageInputContainer from '@/components/form/ImageInputContainer'
 
-  const product = await fetchSingleProduct(id)
-  const { name, image, company, description, price } = product
-  const dollarsAmount = formatCurrency(price)
+type EditProductPageProps = {
+  params: {
+    id: string
+  }
+}
+
+export default async function EditProductPage({ params }: EditProductPageProps) {
+  const product = await fetchAdminProductDetails(params.id)
+
+  if (!product) {
+    return <div className="text-red-600">Product not found.</div>
+  }
+
+  const { name, company, description, featured, price, image } = product
 
   return (
     <section>
-      <BreadCrumbs name={product.name} />
-      <div className="mt-6 grid gap-y-8 lg:grid-cols-2 lg:gap-x-16">
-        {/* IMAGE FIRST COL */}
-        <div className="relative h-full">
-          <Image
-            src={image}
-            alt={name}
-            fill
-            sizes="(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw"
-            priority
-            className="w-full rounded-md object-cover"
-          />
-        </div>
-        {/* PRODUCT INFO SECOND COL */}
-        <div>
-          <div className="flex gap-x-8 items-center">
-            <h1 className="capitalize text-3xl font-bold">{name}</h1>
-            <FavoriteToggleButton productId={id} />
+      <h1 className="text-2xl font-semibold mb-8 capitalize">update product</h1>
+
+      {/* 🖼️ Separate form for updating image */}
+      <div className="border p-8 rounded-md mb-8">
+        <ImageInputContainer
+          action={updateProductImageAction}
+          name={name}
+          image={image}
+          text="update image"
+        >
+          <input type="hidden" name="id" value={params.id} />
+          <input type="hidden" name="url" value={image} />
+        </ImageInputContainer>
+      </div>
+
+      {/* 📝 Form for updating product details */}
+      <div className="border p-8 rounded-md">
+        <FormContainer action={updateProductAction}>
+          <div className="grid gap-4 md:grid-cols-2 my-4">
+            <input type="hidden" name="id" value={params.id} />
+            <FormInput
+              type="text"
+              name="name"
+              label="product name"
+              defaultValue={name}
+            />
+            <FormInput
+              type="text"
+              name="company"
+              label="company"
+              defaultValue={company}
+            />
+            <PriceInput defaultValue={price} />
           </div>
-          <ProductRating productId={id} />
-          <h4 className="text-xl mt-2">{company}</h4>
-          <p className="mt-3 text-md bg-muted inline-block p-2 rounded-md">
-            {dollarsAmount}
-          </p>
-          <p className="mt-6 leading-8 text-muted-foreground">{description}</p>
-          <AddToCart />
-        </div>
+
+          <TextAreaInput
+            name="description"
+            labelText="product description"
+            defaultValue={description}
+          />
+
+          <div className="mt-6">
+            <CheckboxInput
+              name="featured"
+              label="featured"
+              defaultChecked={featured}
+            />
+          </div>
+
+          <SubmitButton text="update product" className="mt-8" />
+        </FormContainer>
       </div>
     </section>
   )
 }
 
-export default SingleProductPage
